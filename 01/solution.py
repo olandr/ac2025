@@ -2,14 +2,16 @@
 
 sample_data = [
 "L68",
-"L30",
-"R48",
+"L130",
+"R148",
 "L5",
-"R60",
+"R260",
 "L55",
-"L1",
+"L100",
 "L99",
-"R14",
+"L100",
+"R100",
+"R314",
 "L82",
 ]
 
@@ -29,10 +31,30 @@ def solution_01(data):
   return(count)
 
 def solution_02(data):
-  return(0)
+  count = 0
+  val = 50
+  for x in data:
+    count += int(x[1:])//100
+    num = int(x[1:])%100
+
+    if x[0] == "R":
+      if val+num > 100:
+        count += 1
+      val = (val+num)%100
+    else:
+      if val-num < 0 and val != 0:
+        count += 1
+      val = (val+(100-num))%100
+
+    if val == 0:
+      count += 1
+   # print(x,val,count)
+  return(count)
+
+
 
 #print("Solution 1 test: ",solution_01(sample_data))
-print("Solution 1: ",solution_01(data))  ## Solution 1:  xxx
+#print("Solution 1: ",solution_01(data))  ## Solution 1:  1105
 
 #print("Solution 2 test: ",solution_02(sample_data))
-#print("Solution 2: ",solution_02(data)) ## Solution 2:  xxx
+print("Solution 2: ",solution_02(data)) ## Solution 2:  6599
