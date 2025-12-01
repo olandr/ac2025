@@ -38,20 +38,16 @@ def solution_02(data):
     num = int(x[1:])%100
 
     if x[0] == "R":
-      if val+num > 100:
+      if val+num >= 100 and val != 0:
         count += 1
-      val = (val+num)%100
     else:
-      if val-num < 0 and val != 0:
+      if val-num <= 0 and val != 0:
         count += 1
-      val = (val+(100-num))%100
 
-    if val == 0:
-      count += 1
-   # print(x,val,count)
+    val = (val+num)%100 if x[0] == "R" else (val+100-num)%100
+
+   # print(x,val,count) 
   return(count)
-
-
 
 #print("Solution 1 test: ",solution_01(sample_data))
 #print("Solution 1: ",solution_01(data))  ## Solution 1:  1105
