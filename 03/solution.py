@@ -13,30 +13,26 @@ with open("./input.txt", "r+") as f:
   data = [line.rstrip('\n') for line in f]
 
 
-def solution_01(data):
+def solution(data,len_batt=2):
   count = 0
   for bank in data:
-    val = max(bank)
-    idx = bank.find(val)
-    if idx == len(bank)-1:
-      bank_new = bank[:idx] + bank[idx+1:]
-      val_2 = max(bank_new)
-      count += int(val_2+val)
-      #print(bank,bank_new,val,idx,val_2,int(val_2+val))
-    else:
-      bank_new = bank[idx+1:]
-      val_2 = max(bank_new)
-      count += int(val+val_2)
-      #print(bank,bank_new,val,idx,val_2,int(val+val_2))
+    out = ""
+    bank_new=bank[:len(bank)-len_batt+1]
+    bank_end=bank[len(bank)-len_batt+1:]
+
+    for x in range(len_batt):
+      val = max(bank_new)
+      out+=val
+      idx = bank_new.find(val)
+      if x < len_batt-1:
+        bank_new = bank_new[idx+1:]
+        bank_new += bank_end[x]
+
+    count += int(out)
   return(count)
 
+#print("Solution 1 test: ",solution(sample_data,2))
+print("Solution 1: ",solution(data,2))  ## Solution 1:  16927
 
-def solution_02(data):
-  return(0)
-
-
-print("Solution 1 test: ",solution_01(sample_data))
-print("Solution 1: ",solution_01(data))  ## Solution 1:  xxx
-
-#print("Solution 2 test: ",solution_02(sample_data))
-#print("Solution 2: ",solution_02(data)) ## Solution 2:  xxx
+#print("Solution 2 test: ",solution(sample_data,12))
+print("Solution 2: ",solution(data,12)) ## Solution 2:  167384358365132
