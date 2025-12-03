@@ -16,7 +16,6 @@ def solution_01(data):
         num = int(ids[0][:int(le/2)])
       else:
         num = int(ids[0][:int(le/2)])+1
-
     else:
       num = 10**int((le-1)/2)
     val = int(str(num)*2)
@@ -27,11 +26,36 @@ def solution_01(data):
   return(count)
 
 def solution_02(data):
-  return(0)
+  ranges = data.split(",")
+  invalid_ids = set()
+  for rang in ranges:
+    ids = rang.split("-")
+    le_min = len(ids[0])
+    le_max = len(ids[1])
+    le_cur = le_min
+    num=0
+    for le_piece in range(1,int(le_max/2)+1):
+      le_cur = le_min
+      if le_cur % le_piece == 0:
+        num = int(ids[0][:int(le_piece)])
+      else:
+        num = 10**(le_piece-1)
+        le_cur += 1
+      val = int(str(num)*int(round(le_cur/le_piece)))
+      while val <= int(ids[1]):
+        if val >= int(ids[0]) and val > 10:
+          invalid_ids.add(val)
+        if num == (10**le_piece)-1:
+          le_cur += le_piece
+          num = 10**(le_piece-1)
+        else:
+          num += 1
+        val = int(str(num)*int(le_cur/le_piece))
+  return(sum(invalid_ids))
 
 
 #print("Solution 1 test: ",solution_01(sample_data))
 print("Solution 1: ",solution_01(data))  ## Solution 1:  40398804950
 
 #print("Solution 2 test: ",solution_02(sample_data))
-#print("Solution 2: ",solution_02(data)) ## Solution 2:  xxx
+print("Solution 2: ",solution_02(data)) ## Solution 2: 65794984339
