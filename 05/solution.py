@@ -17,8 +17,7 @@ ids = []
 with open("./input2.txt", "r+") as f:
   ids = [int(line.rstrip('\n')) for line in f]
 
-def solution_01(data,ids):
-  count=0
+def prep_data(data):
   ranges=[]
   for line in data:
     nums=line.split("-")
@@ -26,6 +25,12 @@ def solution_01(data,ids):
   ranges = sorted(ranges,key=lambda x: x[0])
   min_ids=[x[0] for x in ranges]
   max_ids=[x[1] for x in ranges]
+  return(min_ids,max_ids)
+
+def solution_01(data,ids):
+  
+  count=0
+  min_ids,max_ids=prep_data(data)
 
   for i in ids:
     idx=0
@@ -38,11 +43,29 @@ def solution_01(data,ids):
   return(count)
 
 def solution_02(data):
-  return(0)
+  count=0
+  min_ids,max_ids=prep_data(data)
+
+  idx=0
+  min_id=min_ids[0]
+  max_id=max_ids[0]
+  while True:
+    if min_ids[idx+1] > max_id:
+      count+=max_id-min_id+1
+      min_id=min_ids[idx+1]
+      max_id=max_ids[idx+1]
+    else:
+      max_id=max(max_id,max_ids[idx+1])
+    idx+=1
+    if idx == len(min_ids)-1:
+      #final round
+      count+=max_id-min_id+1
+      break
+  return(count)
 
 
-print("Solution 1 test: ",solution_01(sample_data,sample_ids))
+#print("Solution 1 test: ",solution_01(sample_data,sample_ids))
 print("Solution 1: ",solution_01(data,ids))  ## Solution 1:  789
 
 #print("Solution 2 test: ",solution_02(sample_data))
-#print("Solution 2: ",solution_02(data)) ## Solution 2:  xxx
+print("Solution 2: ",solution_02(data)) ## Solution 2:  343329651880509
