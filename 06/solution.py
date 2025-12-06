@@ -31,11 +31,29 @@ def solution_01(data):
   return(count)
 
 def solution_02(data):
-  return(0)
+  count=0
+  operations=data[len(data)-1]
+  
+  operation = operations[0]
+  c=0
+  for idx,value in enumerate(operations):
+    if value != " ":
+      count += c
+      #reset
+      c = 0 if value == "+" else 1
+      operation = value
+    num = ""
+    for x in data[:len(data)-1]:
+      num += x[idx]
+    if num.strip() != "":
+      c = c+int(num) if operation == "+" else c*int(num)  
+  count += c
+
+  return(count)
 
 
 print("Solution 1 test: ",solution_01(sample_data))
-print("Solution 1: ",solution_01(data))  ## Solution 1:  4805473544166
+#print("Solution 1: ",solution_01(data))  ## Solution 1:  4805473544166
 
 #print("Solution 2 test: ",solution_02(sample_data))
-#print("Solution 2: ",solution_02(data)) ## Solution 2:  xxx
+print("Solution 2: ",solution_02(data)) ## Solution 2:  8907730960817
